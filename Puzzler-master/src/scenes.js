@@ -5,9 +5,61 @@
 // TODO
 // Fix sprite running through wall glitch
 //
-Crafty.scene('Game', function() {
+Crafty.scene('Game3', function() {
 
   Crafty.e('Platform').attr({x:40,y:250,w:20,h:3});
+
+  Crafty.e('Platform').attr({x:200,y:250,w:20,h:3});
+  // Player character, placed at 5, 5 on our grid
+  this.player = Crafty.e('PlayerCharacter').at(1, 4);
+
+  // All the walls - Change h/w = 1 to 0 if you want the 
+  // platforms to be invisible
+
+  // Upper
+  Crafty.e('Platform').attr({x:0,y:0,w:1085,h:1});
+  // Lower
+  Crafty.e('GameOver').attr({x:0,y:287,w:1085,h:1});
+  // Left
+  Crafty.e('Platform').attr({x:0,y:0,w:1,h:288});
+  // Right
+  Crafty.e('Platform').attr({x:1084,y:0,w:1,h:288});
+
+  // For use in iterating over grid if desired
+  for (var x = 0; x < Game.map_grid.width; x++) {
+    for (var y = 0; y < Game.map_grid.height; y++) {
+      // var at_edge = x == 0 || x == Game.map_grid.width - 1 || y == 0 || y == Game.map_grid.height - 1;
+
+      // if (Math.random() < 0.06) {
+      //   Crafty.e('Platform').attr({x:31*x,y:16*y,w:31,h:18});
+      // }
+    }
+  }
+
+  // Generate up to five villages on the map in random locations
+
+  Crafty.e('Door').at(30, 10);
+    // Show the victory screen once all villages are visisted
+
+  this.show_victory = this.bind('DoorVisited', function() {
+    if (!Crafty('Door').length) {
+      Crafty.scene('Victory');
+    }
+  });
+}, function() {
+  // Remove our event binding from above so that we don't
+  //  end up having multiple redundant event watchers after
+  //  multiple restarts of the game
+  this.unbind('DoorVisited', this.show_victory);
+
+});
+
+Crafty.scene('Game2', function() {
+
+  Crafty.e('Platform').attr({x:40,y:250,w:300,h:3});
+
+  Crafty.e('Platform').attr({x:450,y:250,w:300,h:3});
+
   // Player character, placed at 5, 5 on our grid
   this.player = Crafty.e('PlayerCharacter').at(1, 4);
 
@@ -53,6 +105,55 @@ Crafty.scene('Game', function() {
 });
 
 
+
+Crafty.scene('Game1', function() {
+
+
+  Crafty.e('Platform').attr({x:40,y:280,w:800,h:3});
+
+  // Player character, placed at 5, 5 on our grid
+  this.player = Crafty.e('PlayerCharacter').at(1, 4);
+
+  // All the walls - Change h/w = 1 to 0 if you want the 
+  // platforms to be invisible
+
+  // Upper
+  Crafty.e('Platform').attr({x:0,y:0,w:1085,h:1});
+  // Lower
+  Crafty.e('GameOver').attr({x:0,y:400,w:1085,h:1});
+  // Left
+  Crafty.e('Platform').attr({x:0,y:0,w:1,h:288});
+  // Right
+  Crafty.e('Platform').attr({x:1084,y:0,w:1,h:288});
+
+  // For use in iterating over grid if desired
+  for (var x = 0; x < Game.map_grid.width; x++) {
+    for (var y = 0; y < Game.map_grid.height; y++) {
+      // var at_edge = x == 0 || x == Game.map_grid.width - 1 || y == 0 || y == Game.map_grid.height - 1;
+
+      // if (Math.random() < 0.06) {
+      //   Crafty.e('Platform').attr({x:31*x,y:16*y,w:31,h:18});
+      // }
+    }
+  }
+
+  // Generate up to five villages on the map in random locations
+
+  Crafty.e('Door').at(30, 13);
+    // Show the victory screen once all villages are visisted
+
+  this.show_victory = this.bind('DoorVisited', function() {
+    if (!Crafty('Door').length) {
+      Crafty.scene('Victory');
+    }
+  });
+}, function() {
+  // Remove our event binding from above so that we don't
+  //  end up having multiple redundant event watchers after
+  //  multiple restarts of the game
+  this.unbind('DoorVisited', this.show_victory);
+
+});
 
 // game over scene
 // -------------
@@ -158,6 +259,6 @@ Crafty.scene('Loading', function(){
 
     // Thoughts?
 
-    Crafty.scene('Game');
+    Crafty.scene('Game1');
   })
 });
